@@ -1,3 +1,4 @@
+import argparse
 from html.parser import HTMLParser
 from urllib.request import urlopen
 from urllib import parse
@@ -39,12 +40,10 @@ def spider(url, word, maxPages):
 
     urlsFound = []
     totalCount = 0
-    linkIndex = 0
     while numberVisited < maxPages and pagesToVisit != []:
         numberVisited += 1
-        url = pagesToVisit[linkIndex]
+        url = pagesToVisit[0]
         pagesToVisit = pagesToVisit[1:]
-        linkIndex += 1
         try:
             print(numberVisited, "Visiting:", url)
             parser = linkParser()
@@ -67,4 +66,17 @@ def spider(url, word, maxPages):
         else:
             print("Word never found")
 
-spider("recode.net", "Facebook", 20)
+# Initiate parser for command line arguments
+parser = argparse.ArgumentParser()
+parser.add_argument('--address')
+parser.add_argument('--word')
+parser.add_argument('--upper')
+
+args = vars(parser.parse_args())
+print(args)
+
+address = args['address']
+word = args['word']
+upper = int(args['upper'])
+print("Starting spider at address", address, ", searching for key", word, "with page limit of", str(upper))
+spider(address, word, upper)

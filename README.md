@@ -1,2 +1,2 @@
 # SimpleCrawler
-Simple web crawler written in Python.
+Simple Python program to crawl through a given page, extract links, and repeat until hitting an upper limit of pages.
